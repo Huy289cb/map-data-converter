@@ -62,7 +62,7 @@ import { VNM_60_1 } from './mapData/district/VNM.60_1';
 import { VNM_61_1 } from './mapData/district/VNM.61_1';
 import { VNM_62_1 } from './mapData/district/VNM.62_1';
 
-export const districs = {
+export default Object.freeze({
   VNM_1_1: VNM_1_1,
   VNM_2_1: VNM_2_1,
   VNM_3_1: VNM_3_1,
@@ -126,4 +126,4 @@ export const districs = {
   VNM_61_1: VNM_61_1,
   VNM_62_1: VNM_62_1,
   VNM_63_1: VNM_63_1,
-};
+})
