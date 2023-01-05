@@ -13,67 +13,65 @@ const pagingAdministratives = (searchObject) => {
   return axios.post(url, searchObject);
 };
 
-// const newProvinces = {...provinces}
-const forLoop = async _ => {
-  for (const provinceName in provinces) {
-    const province = provinces[provinceName]
-    if (province) {
-      const wards = province.features
-      if (wards && wards.length > 0 && wards[0].properties && wards[0].properties.NAME_1) {
-        const resProvince = await pagingAdministratives({
-          level: 3,
-          keyword: wards[0].properties.NAME_1,
-          pageIndex: 1,
-          pageSize: 10,
-        })
+// const parseWards = async _ => {
+//   for (const provinceName in provinces) {
+//     const province = provinces[provinceName]
+//     if (province) {
+//       const wards = province.features
+//       if (wards && wards.length > 0 && wards[0].properties && wards[0].properties.NAME_1) {
+//         const resProvince = await pagingAdministratives({
+//           level: 3,
+//           keyword: wards[0].properties.NAME_1,
+//           pageIndex: 1,
+//           pageSize: 10,
+//         })
         
-        if (resProvince.data && resProvince.data.content && resProvince.data.content.length > 0 && resProvince.data.content[0].id) {
-          const provinceVitimes = resProvince.data.content[0];
-          if (provinceVitimes && provinceVitimes.id) {
-            pagingAdministratives({
-              level: 5,
-              provinceId: provinceVitimes.id,
-              pageIndex: 1,
-              pageSize: 9999,
-            }).then((res) => {
-              if (res && res.data && res.data.content && res.data.content.length > 0) {
-                const listWardsVitimes = res.data.content;
-                const covertedWards = wards.map((ward) => {
-                  const findVitimesWard = listWardsVitimes.find(f => {
-                    if (ward.properties && ward.properties.NAME_2 && ward.properties.NAME_3 && f.name && f.parentName) {
-                      if (f.name.includes(ward.properties.NAME_3) && f.parentName.includes(ward.properties.NAME_2)) {
-                        return true
-                      }
-                    }
-                    return false;
-                  })
-                  if (findVitimesWard) {
-                    return {
-                      ...ward,
-                      properties: {
-                       ...ward.properties,
-                       code1: provinceVitimes.code,
-                       code2: findVitimesWard.parentCode,
-                       code3: findVitimesWard.code
-                      },
-                    }
-                  }
-                  return ward
-                })
-                const data = JSON.stringify({...province, features: covertedWards});
-                fs.writeFile(path + provinceName + ".json", data, (err) => {
-                  if (err) console.log(err + provinceName);
-                  console.log("Successfully Written to File." + provinceName);
-                });
-              }
-            })
-          }
-        }
-      }
-    }
-  }
-  // var data = JSON.stringify(newProvinces);
-}
-forLoop();
+//         if (resProvince.data && resProvince.data.content && resProvince.data.content.length > 0 && resProvince.data.content[0].id) {
+//           const provinceVitimes = resProvince.data.content[0];
+//           if (provinceVitimes && provinceVitimes.id) {
+//             pagingAdministratives({
+//               level: 5,
+//               provinceId: provinceVitimes.id,
+//               pageIndex: 1,
+//               pageSize: 9999,
+//             }).then((res) => {
+//               if (res && res.data && res.data.content && res.data.content.length > 0) {
+//                 const listWardsVitimes = res.data.content;
+//                 const covertedWards = wards.map((ward) => {
+//                   const findVitimesWard = listWardsVitimes.find(f => {
+//                     if (ward.properties && ward.properties.NAME_2 && ward.properties.NAME_3 && f.name && f.parentName) {
+//                       if (f.name.includes(ward.properties.NAME_3) && f.parentName.includes(ward.properties.NAME_2)) {
+//                         return true
+//                       }
+//                     }
+//                     return false;
+//                   })
+//                   if (findVitimesWard) {
+//                     return {
+//                       ...ward,
+//                       properties: {
+//                        ...ward.properties,
+//                        code1: provinceVitimes.code,
+//                        code2: findVitimesWard.parentCode,
+//                        code3: findVitimesWard.code
+//                       },
+//                     }
+//                   }
+//                   return ward
+//                 })
+//                 const data = JSON.stringify({...province, features: covertedWards});
+//                 fs.writeFile(path + provinceName + ".json", data, (err) => {
+//                   if (err) console.log(err + provinceName);
+//                   console.log("Successfully Written to File." + provinceName);
+//                 });
+//               }
+//             })
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// parseWards();
 
 
