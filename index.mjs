@@ -145,8 +145,7 @@ const parseProvinces = async _ => {
             ...p,
             properties: {
              ...p.properties,
-             code1: findVitimesDt.parentCode,
-             code2: findVitimesDt.code
+             code1: findVitimesDt.code
             },
           }
         }
